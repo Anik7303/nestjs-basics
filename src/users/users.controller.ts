@@ -8,10 +8,9 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+
 import { Serialize } from 'src/interceptors';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
-import { UserDto } from './dtos/user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from 'src/users/dtos';
 import { UsersService } from './users.service';
 
 @Controller('auth')
@@ -29,7 +28,7 @@ export class UsersController {
     return this.usersService.findOne(parseInt(id));
   }
 
-  @Post('sign-up')
+  @Post('signup')
   createUser(@Body() body: CreateUserDto) {
     const { email, password } = body;
     return this.usersService.create(email, password);

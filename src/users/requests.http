@@ -5,7 +5,7 @@ GET http://localhost:3000/auth?email=test@example.com
 GET http://localhost:3000/auth/2
 
 ### create a new user
-POST http://localhost:3000/auth/sign-up
+POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
@@ -23,4 +23,4 @@ content-type: application/json
 }
 
 ### delete a user with id
-DELETE http://localhost:3000/auth/2
+DELETE http://localhost:3000/auth/7
