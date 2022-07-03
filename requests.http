@@ -1,5 +1,0 @@
-### list all users
-GET http://localhost:3000/users
-
-### list all reports
-GET http://localhost:3000/reports
