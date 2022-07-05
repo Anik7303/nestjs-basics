@@ -1,7 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { transformPassword } from '../utils';
 import { AuthService } from './auth.service';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
@@ -11,10 +10,22 @@ describe('AuthService', () => {
   let fakeUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
+    const users: User[] = [];
+
     fakeUsersService = {
-      find: (email: string) => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as User),
+      find(email: string): Promise<User[]> {
+        const filteredUsers = users.filter((user) => user.email === email);
+        return Promise.resolve(filteredUsers);
+      },
+      create(email: string, password: string): Promise<User> {
+        const user = {
+          id: Math.floor(Math.random() * 999999),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -54,10 +65,7 @@ describe('AuthService', () => {
     });
 
     test('throws error as email is already in use', async () => {
-      fakeUsersService.find = (email: string) =>
-        Promise.resolve([
-          { id: 1, email: 'test@example.com', password: 'test' },
-        ]);
+      await service.signup('test@example.com', 'test');
 
       expect.assertions(2);
       try {
@@ -70,21 +78,12 @@ describe('AuthService', () => {
   });
 
   describe('login as an existing user', () => {
-    let password = 'test';
-    let hashedPassword: string;
-
-    beforeEach(async () => {
-      hashedPassword = await transformPassword(password);
-      fakeUsersService.find = (email: string) =>
-        Promise.resolve([{ id: 1, email, password: hashedPassword } as User]);
-    });
-
     test('throws if signin is called with an unused email', async () => {
       fakeUsersService.find = (email: string) => Promise.resolve([]);
 
       expect.assertions(2);
       try {
-        await service.signin('test@example.com', password);
+        await service.signin('test@example.com', 'test');
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
         expect(error.message).toEqual('user not found');
@@ -92,6 +91,8 @@ describe('AuthService', () => {
     });
 
     test('throws if an invalid password is provided', async () => {
+      await service.signup('test@example.com', 'test');
+
       expect.assertions(2);
       try {
         await service.signin('test@example.com', 'testing');
@@ -102,7 +103,8 @@ describe('AuthService', () => {
     });
 
     test('signs in successfully', async () => {
-      const user = await service.signin('test@example.com', password);
+      await service.signup('test@example.com', 'test');
+      const user = await service.signin('test@example.com', 'test');
 
       expect.assertions(4);
       expect(user).toBeDefined();
