@@ -12,12 +12,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response as EResponse } from 'express';
-import { AuthGuard } from 'src/guards/auth.guard';
 
-import { Serialize } from 'src/interceptors';
-import { CreateUserDto, UpdateUserDto, UserDto } from 'src/users/dtos';
+import { Serialize } from '../interceptors';
+import { AuthGuard } from '../guards';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user';
+import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -40,6 +40,7 @@ export class UsersController {
     const { email, password } = body;
     const user = await this.authService.signup(email, password);
     session.userId = user.id;
+    return user;
   }
 
   @Post('signin')
