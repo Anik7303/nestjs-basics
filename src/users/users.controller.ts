@@ -29,12 +29,6 @@ export class UsersController {
     private readonly authService: AuthService,
   ) {}
 
-  @UseGuards(AuthGuard)
-  @Get('whoami')
-  whoAmI(@CurrentUser() user: User) {
-    return user;
-  }
-
   @Post('signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const { email, password } = body;
@@ -59,6 +53,12 @@ export class UsersController {
   @Get('signout')
   signOut(@Session() session: any) {
     session.userId = null;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('whoami')
+  whoAmI(@CurrentUser() user: User) {
+    return user;
   }
 
   @Get()
