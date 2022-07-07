@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { generatePasswordHashWithSalt, transformPassword } from '../utils';
 import { UsersService } from './users.service';
+import { generateHash, transformPassword } from '../utils';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +34,7 @@ export class AuthService {
     }
 
     const [storedHash, salt] = user.password.split('.');
-    const hash = await generatePasswordHashWithSalt(password, salt);
+    const hash = await generateHash(password, salt);
 
     if (hash !== storedHash) {
       throw new BadRequestException('bad password');

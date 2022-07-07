@@ -3,22 +3,19 @@ import { promisify } from 'util';
 
 const scrypt = promisify(_scrypt);
 
-export async function transformPassword(password: string): Promise<string> {
-  // generate a salt
-  const salt: string = randomBytes(8).toString('hex');
-  // hash salt and password together
-  const buffer = (await scrypt(password, salt, 32)) as Buffer;
-  // join hashed result and salt together
-  const hash = `${buffer.toString('hex')}.${salt}`;
-  // return hashed and salted password
-  return hash;
-}
-
-export async function generatePasswordHashWithSalt(
+export async function generateHash(
   password: string,
   salt: string,
 ): Promise<string> {
   const buffer = (await scrypt(password, salt, 32)) as Buffer;
-  const hash = buffer.toString('hex');
-  return hash;
+  return buffer.toString('hex');
+}
+
+export async function transformPassword(password: string): Promise<string> {
+  // generate a salt
+  const salt: string = randomBytes(8).toString('hex');
+  // generate hash with salt
+  const hash = await generateHash(password, salt);
+  // join hashed result and salt together
+  return `${hash}.${salt}`;
 }

@@ -1,0 +1,16 @@
+### create new request
+POST http://localhost:3000/reports
+content-type: application/json
+
+{
+  "make": "toyota",
+  "model": "corolla",
+  "year": 1980,
+  "price": 190000,
+  "lng": 0,
+  "lat": 0,
+  "mileage": 100000
+}
+
+### delete report with id
+DELETE http://localhost:3000/reports/2

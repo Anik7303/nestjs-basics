@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './user.entity';
+import { transformPassword } from '../utils';
 
 @Injectable()
 export class UsersService {
@@ -30,7 +31,14 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('user not found');
     }
-    Object.assign(user, attrs);
+
+    let updatedAttrs: Partial<User> = {};
+    Object.assign(updatedAttrs, attrs);
+    if (attrs.password) {
+      updatedAttrs.password = await transformPassword(attrs.password);
+    }
+
+    Object.assign(user, updatedAttrs);
     return this.repo.save(user);
   }
 

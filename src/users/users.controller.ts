@@ -7,19 +7,19 @@ import {
   Patch,
   Post,
   Query,
-  Response,
+  Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
-import { Response as EResponse } from 'express';
+import { Response } from 'express';
 
-import { Serialize } from '../interceptors';
-import { AuthGuard } from '../guards';
 import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators/current-user';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { Serialize } from '../interceptors';
+import { CurrentUser } from '../decorators';
+import { AuthGuard } from '../guards';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -40,7 +40,7 @@ export class UsersController {
   @Post('signin')
   async login(
     @Body() body: CreateUserDto,
-    @Response({ passthrough: true }) response: EResponse,
+    @Res({ passthrough: true }) response: Response,
     @Session() session: any,
   ) {
     const { email, password } = body;
