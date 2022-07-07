@@ -10,9 +10,8 @@ import {
 import { CreateReportDto, ReportDto } from './dtos';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '../guards';
-import { CurrentUser } from '../decorators';
+import { CurrentUser, User } from '../users';
 import { Serialize } from '../interceptors';
-import { User } from '../users';
 
 @Controller('reports')
 export class ReportsController {

@@ -14,11 +14,11 @@ import {
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { Serialize } from '../interceptors';
-import { CurrentUser } from '../decorators';
 import { AuthGuard } from '../guards';
 
 @Controller('auth')

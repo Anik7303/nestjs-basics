@@ -1,4 +1,5 @@
 export * from './auth.service';
+export * from './decorators';
 export * from './dtos';
 export * from './interceptors';
 export * from './user.entity';
