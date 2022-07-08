@@ -15,14 +15,8 @@ export class ReportsService {
     return this.repo.save(report);
   }
 
-  async createEstimate({
-    make,
-    model,
-    mileage,
-    lng,
-    lat,
-    year,
-  }: GetEstimateDto) {
+  async createEstimate(estimateDto: GetEstimateDto) {
+    const { make, model, mileage, lng, lat, year } = estimateDto;
     return this.repo
       .createQueryBuilder()
       .select('AVG(price)', 'price')
@@ -34,7 +28,7 @@ export class ReportsService {
       .andWhere('year - :year BETWEEN -3 AND 3', { year })
       .orderBy('ABS(mileage - :mileage)', 'DESC')
       .setParameters({ mileage })
-      .limit(3)
+      .limit(5)
       .getRawOne();
   }
 

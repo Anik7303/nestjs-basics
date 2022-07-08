@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Report, ReportsModule } from '../reports';
-import { User, UsersModule } from '../users';
+import { ReportsModule } from '../reports';
+import { UsersModule } from '../users';
 
 const cookieSession = require('cookie-session');
 @Module({

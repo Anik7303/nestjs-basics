@@ -20,10 +20,8 @@ export class AuthService {
 
     // hash password
     const hash = await transformPassword(password);
-
     // create new user and save it
     const user = await this.usersService.create(email, hash);
-
     return user;
   }
 
@@ -35,7 +33,6 @@ export class AuthService {
 
     const [storedHash, salt] = user.password.split('.');
     const hash = await generateHash(password, salt);
-
     if (hash !== storedHash) {
       throw new BadRequestException('bad password');
     }
