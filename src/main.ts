@@ -7,12 +7,6 @@ import { AppModule } from './app';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(
-    cookieSession({
-      keys: ['asdfljadfgasb'],
-    }),
-  );
-  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 bootstrap();

@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ReportsModule } from '../reports';
-import { UsersModule } from '../users';
+import { Report, ReportsModule } from '../reports';
+import { User, UsersModule } from '../users';
 
 const cookieSession = require('cookie-session');
 @Module({
@@ -21,8 +21,8 @@ const cookieSession = require('cookie-session');
         return {
           type: 'sqlite',
           database: config.get<string>('DB_NAME'),
-          autoLoadEntities: true,
           synchronize: true,
+          autoLoadEntities: true,
         };
       },
     }),
