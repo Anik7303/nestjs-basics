@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
-import { UpdateUserDto } from './dtos';
+import { UpdateUserDto } from './dtos/update-user.dto';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';

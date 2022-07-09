@@ -10,17 +10,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import {
-  ApproveReportDto,
-  CreateReportDto,
-  GetEstimateDto,
-  ReportDto,
-} from './dtos';
-import { AdminGuard } from './guards';
+import { ApproveReportDto } from './dtos/approve-report.dto';
+import { CreateReportDto } from './dtos/create-report.dto';
+import { GetEstimateDto } from './dtos/get-estimate.dto';
+import { ReportDto } from './dtos/report.dto';
+import { AdminGuard } from './guards/admin.guard';
 import { ReportsService } from './reports.service';
-import { AuthGuard } from '../guards';
-import { Serialize } from '../interceptors';
-import { CurrentUser, User } from '../users';
+import { AuthGuard } from '../guards/auth.guard';
+import { Serialize } from '../interceptors/serializer.interceptor';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { User } from '../users/user.entity';
 
 @Controller('reports')
 export class ReportsController {

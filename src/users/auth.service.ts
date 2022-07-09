@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
-import { generateHash, transformPassword } from '../utils';
+import { generateHash, transformPassword } from '../utils/user';
 
 @Injectable()
 export class AuthService {

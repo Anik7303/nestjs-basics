@@ -14,12 +14,14 @@ import {
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators';
-import { CreateUserDto, UpdateUserDto, UserDto } from './dtos';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { UserDto } from './dtos/user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { Serialize } from '../interceptors';
-import { AuthGuard } from '../guards';
+import { Serialize } from '../interceptors/serializer.interceptor';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
