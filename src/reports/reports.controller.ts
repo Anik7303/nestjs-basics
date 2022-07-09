@@ -45,7 +45,6 @@ export class ReportsController {
 
   @Delete(':id')
   removeReport(@Param('id') id: number) {
-    console.log({ id });
     return this.reportsService.remove(id);
   }
 }

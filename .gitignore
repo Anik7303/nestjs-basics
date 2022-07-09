@@ -45,3 +45,4 @@ test.sqlite
 
 # misc
 package-lock.json
+migrations

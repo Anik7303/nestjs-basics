@@ -12,12 +12,17 @@ const getDbOptions = () => {
     database: process.env.DB_NAME,
     synchronize: false,
     entities: [User, Report],
+    migrations: ['migrations/*.js'],
   };
 
   switch (process.env.NODE_ENV) {
     case 'development':
       break;
     case 'test':
+      dbOptions = {
+        ...dbOptions,
+        migrationsRun: true,
+      };
       break;
     case 'production':
       dbOptions = {

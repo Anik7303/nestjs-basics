@@ -6,22 +6,22 @@ content-type: application/json
   "make": "toyota",
   "model": "corolla",
   "year": 1982,
-  "price": 22000,
+  "price": 20000,
   "lng": 0,
   "lat": 0,
   "mileage": 10000
 }
 
 ### change approved state
-PATCH http://localhost:3000/reports/3
+PATCH http://localhost:3000/reports/2
 content-type: application/json
 
 {
-  "approved": false
+  "approved": true
 }
 
 ### get estimate
-GET http://localhost:3000/reports?make=ford&model=mustang&year=1981&mileage=100000&lng=45&lat=45
+GET http://localhost:3000/reports?make=toyota&model=corolla&year=1981&mileage=100000&lng=4&lat=4
 
 ### delete report with id
-DELETE http://localhost:3000/reports/1
+DELETE http://localhost:3000/reports/2
